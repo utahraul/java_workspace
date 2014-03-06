@@ -19,5 +19,15 @@ public class Controlador {
 		modelo.setTexto("Hola Mundo 2");
 		vista.mostrar_Texto(modelo.getTexto());
 	}
+	public void prueba_Dos () {
+		Modelo modelo2 =new Modelo ();
+		modelo2.setTexto("Hola Mundo");
+		if (modelo2.equals(modelo)){
+			vista.mostrar_Texto("Son iguales");
+		}
+		else {
+			vista.mostrar_Texto("Son distintos");
+		}
+	}
 	
 }
