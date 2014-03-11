@@ -7,16 +7,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
 
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
-public class Ventana extends JFrame implements ActionListener {
+public class Ventana extends JFrame implements ActionListener,MouseListener {
 	// PROPIEDADES PARA EL MENU
 	private JMenuBar barra_menu;
 
@@ -35,6 +38,13 @@ public class Ventana extends JFrame implements ActionListener {
 	private JMenu submenu;
 	private JMenuItem submenu1;
 	private JMenuItem submenu2;
+	
+	//********** MENU CONTEXTUAL
+	private JPopupMenu menu_contextual;
+	
+	private JMenuItem mc_opcion11;
+	private JMenuItem mc_opcion13;
+	private JMenuItem mc_submenu11;
 
 	public Ventana() {
 		setBounds(new Rectangle(100, 100, 350, 350));
@@ -96,7 +106,7 @@ public class Ventana extends JFrame implements ActionListener {
 		opcion32.addActionListener(this);
 		// ASOCIAMOS TAMBIEN EL SUBMENU AL MISMO RECEPTOR
 		submenu1.addActionListener(this);
-		submenu2.addActionListener(this);
+		 submenu2.addActionListener(this);
 		// DAMOS VALOR A LA PROPIEDAD NAME PARA IDENTIFICAR LOS OBJETOS EN EL
 		// EVENTO
 		opcion11.setName("opcion11");
@@ -113,9 +123,34 @@ public class Ventana extends JFrame implements ActionListener {
 		// AÑADIMOS A LA OPCION SALIR UN ACELERADOR DE TECLADO
 		opcion13.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
 				InputEvent.CTRL_MASK));
+	
+		//************** MENU CONTEXTUAL ****************
+		//CREAMOS EL CONTENEDOR DEL MENU CONTEXTAUL
+		menu_contextual=new JPopupMenu();
+		
+		mc_opcion11 = new JMenuItem("Abrir");
+		mc_opcion13 = new JMenuItem("Salir");
+		mc_submenu11 = new JMenuItem("Submenu 11");
+		
+		mc_opcion11.addActionListener(this);
+		mc_opcion13.addActionListener(this);
+		mc_submenu11.addActionListener(this);
+		
+		mc_opcion11.setName("opcion11");
+		mc_opcion13.setName("opcion13");
+		mc_submenu11.setName("submenu11");
+				
+		//LE DAMOS CONTENIDO A PARTIR DE LOS JMENUITEM YA CREADOS
+		menu_contextual.add(mc_opcion11);
+		menu_contextual.add(mc_opcion13);
+		menu_contextual.addSeparator();
+		menu_contextual.add(mc_submenu11);
+		
+		this.getContentPane().addMouseListener(this);
+		
 		
 	}
-
+	//********** EVENTO DE ACCION ***********
 	@Override
 	public void actionPerformed(ActionEvent evento) {
 		// OBTENEMOS EL VALOR DE LA PROPIEDAD NAME PARA ESTABLECER LA LOGICA DE
@@ -123,5 +158,39 @@ public class Ventana extends JFrame implements ActionListener {
 		String opcion_elegida = ((JComponent) evento.getSource()).getName();
 		System.out.println(opcion_elegida);
 
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent evento) {
+		//PREGUNTAMOS POR EL BOTON PULSADO, 3 BOTON DERECHO
+		if (evento.getButton()==3) {
+			//MOSTRAMOS EL MENU CONTEXTUAL
+			menu_contextual.show(this, evento.getX(), evento.getY());
+		}
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// VACIO POR FALTA DE USO
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// VACIO POR FALTA DE USO
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// VACIO POR FALTA DE USO
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// VACIO POR FALTA DE USO
+		
 	}
 }
