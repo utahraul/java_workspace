@@ -39,7 +39,6 @@ public class Calculadora extends JFrame implements ActionListener {
 	private JButton boton_1;
 	private JButton boton_3;
 	private JButton boton_2;
-	private JButton btnNewButton_3;
 	private JButton boton_4;
 	private JButton boton_5;
 	private JButton boton_6;
@@ -58,6 +57,12 @@ public class Calculadora extends JFrame implements ActionListener {
 	private JButton boton_off;
 	private JButton boton_ce;
 
+	// PROPIEDADES PARA LA REALIZACIÓN DE OPERACIONES
+	private int ope1 = 0;
+	private int ope2 = 0;
+	private boolean operacion = false;
+	private char ultima_operacion;
+
 	/**
 	 * Creación de la ventana de la calculadora
 	 */
@@ -67,6 +72,7 @@ public class Calculadora extends JFrame implements ActionListener {
 		setBounds(new Rectangle(100, 100, 300, 450));
 		getContentPane().setLayout(null);
 		crear_Interface();
+		setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 
 		setVisible(true);
 	}
@@ -199,7 +205,9 @@ public class Calculadora extends JFrame implements ActionListener {
 		boton_off.setFont(new Font("Verdana", Font.PLAIN, 24));
 		boton_off.setToolTipText("Cerrar Calculadora");
 		panel_ce_off.add(boton_off);
-		
+
+		// AÑADIMOS RECEPTORES DE EVENTOS A LOS BOTONES
+		// TODOS LOS BOTONES EL MISMO RECEPTOR
 		boton_0.addActionListener(this);
 		boton_1.addActionListener(this);
 		boton_2.addActionListener(this);
@@ -210,13 +218,181 @@ public class Calculadora extends JFrame implements ActionListener {
 		boton_7.addActionListener(this);
 		boton_8.addActionListener(this);
 		boton_9.addActionListener(this);
-		boton_0.addActionListener(this);
-
+		boton_punto.addActionListener(this);
+		boton_igual.addActionListener(this);
+		boton_sumar.addActionListener(this);
+		boton_restar.addActionListener(this);
+		boton_multiplicar.addActionListener(this);
+		boton_dividir.addActionListener(this);
+		boton_ce.addActionListener(this);
+		boton_off.addActionListener(this);
 	}
 
+	/**
+	 * Tratamiento del evento de pulsación de cualquier botón de la calculadora.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent evento) {
+		// RECOGEMOS EL VALOR TECLEADO POR EL USUARIO
 		String opcion_elegida = ((JButton) evento.getSource()).getText();
+		// DEBAJO LA FORMA DE VER QUE LO QUE TECLEAMOS APARECE EN EL VISOR
+		// visor.setText(opcion_elegida);
+		// ELIMINAMOS EL 0 INICIAL
+		if (visor.getText().equals("0")) {
+			visor.setText("");
+		}
+		
+		//SI SE HA PULSADO ANTERIORMENTE UN BOTÓN DE OPERACIÓN SE BORRA
+		//EL VISOR PARA EMPEZAR UN NUEVO NÚMERO
+		
+		if (operacion) {
+			visor.setText ("");
+			operacion = false;
+		}
 
+		// AÑADIMOS EL NÚMERO CORRESPONDIENTE DE LA TECLA PULSADA POR EL USUARIO
+		if (opcion_elegida.equals("1")) {
+			visor.setText(visor.getText() + "1");
+		}
+		if (opcion_elegida.equals("2")) {
+			visor.setText(visor.getText() + "2");
+		}
+		if (opcion_elegida.equals("3")) {
+			visor.setText(visor.getText() + "3");
+		}
+		if (opcion_elegida.equals("4")) {
+			visor.setText(visor.getText() + "4");
+		}
+		if (opcion_elegida.equals("5")) {
+			visor.setText(visor.getText() + "1");
+		}
+		if (opcion_elegida.equals("6")) {
+			visor.setText(visor.getText() + "6");
+		}
+		if (opcion_elegida.equals("7")) {
+			visor.setText(visor.getText() + "7");
+		}
+		if (opcion_elegida.equals("8")) {
+			visor.setText(visor.getText() + "8");
+		}
+		if (opcion_elegida.equals("9")) {
+			visor.setText(visor.getText() + "9");
+		}
+		if (opcion_elegida.equals("0")) {
+			visor.setText(visor.getText() + "0");
+		}
+		
+		//REALIZAMOS LAS OPERACIONES ARITMÉTICAS
+		if (opcion_elegida.equals("+")) {
+			//SI NO HAY PRIMER NÚMERO SE ALMACENA DE LA PRIMERA VARIABLE
+			if (ope1 == 0) {
+				ope1 = Integer.parseInt(visor.getText());
+			}
+			else {
+				//EN CASO DE TENER UN NÚMERO ESCRITO SE SUMA ACUMULATIVAMENTE
+				//EN OPE1
+				if (!visor.getText().equals("")){
+					ope2 = Integer.parseInt(visor.getText());
+					ope1 = ope1 + ope2;
+					visor.setText(String.valueOf(ope1));
+				}
+			}
+			//REGISTRAMOS EL PROCESO
+			operacion = true;
+			ultima_operacion = '+';
+		}
+		
+		if (opcion_elegida.equals("-")) {
+			//SI NO HAY PRIMER NÚMERO SE ALMACENA DE LA PRIMERA VARIABLE
+			if (ope1 == 0) {
+				ope1 = Integer.parseInt(visor.getText());
+			}
+			else {
+				//EN CASO DE TENER UN NÚMERO ESCRITO SE SUMA ACUMULATIVAMENTE
+				//EN OPE1
+				if (!visor.getText().equals("")){
+					ope2 = Integer.parseInt(visor.getText());
+					ope1 = ope1 + ope2;
+					visor.setText(String.valueOf(ope1));
+				}
+			}
+			//REGISTRAMOS EL PROCESO
+			operacion = true;
+			ultima_operacion = '+';
+		}
+		if (opcion_elegida.equals("*")) {
+			//SI NO HAY PRIMER NÚMERO SE ALMACENA DE LA PRIMERA VARIABLE
+			if (ope1 == 0) {
+				ope1 = Integer.parseInt(visor.getText());
+			}
+			else {
+				//EN CASO DE TENER UN NÚMERO ESCRITO SE SUMA ACUMULATIVAMENTE
+				//EN OPE1
+				if (!visor.getText().equals("")){
+					ope2 = Integer.parseInt(visor.getText());
+					ope1 = ope1 * ope2;
+					visor.setText(String.valueOf(ope1));
+				}
+			}
+			//REGISTRAMOS EL PROCESO
+			operacion = true;
+			ultima_operacion = '*';
+		}
+		if (opcion_elegida.equals("/")) {
+			//SI NO HAY PRIMER NÚMERO SE ALMACENA DE LA PRIMERA VARIABLE
+			if (ope1 == 0) {
+				ope1 = Integer.parseInt(visor.getText());
+			}
+			else {
+				//EN CASO DE TENER UN NÚMERO ESCRITO SE SUMA ACUMULATIVAMENTE
+				//EN OPE1
+				if (!visor.getText().equals("")){
+					ope2 = Integer.parseInt(visor.getText());
+					ope1 = ope1 / ope2;
+					visor.setText(String.valueOf(ope1));
+				}
+			}
+			//REGISTRAMOS EL PROCESO
+			operacion = true;
+			ultima_operacion = '/';
+		}
+				
+		// CERRAMOS LA OPERACION AL PULSAR IGUAL
+				if (opcion_elegida.equals("=")) {
+					switch (ultima_operacion) {
+					case '+':
+						visor.setText(String.valueOf(ope1
+								+ Integer.parseInt(visor.getText())));
+						break;
+					case '-':
+						visor.setText(String.valueOf(ope1
+								- Integer.parseInt(visor.getText())));
+						break;
+
+					case '*':
+						visor.setText(String.valueOf(ope1
+								* Integer.parseInt(visor.getText())));
+						break;
+
+					case '/':
+						visor.setText(String.valueOf(ope1
+								/ Integer.parseInt(visor.getText())));
+						break;
+					}
+					ultima_operacion = ' ';
+					ope1 = 0;
+					ope2 = 0;
+					operacion = true;
+				}
+		
+		// BORRAMOS LA PANTALLA E INICIAMOS
+		if (opcion_elegida.equals("CE")) {
+			visor.setText("0");
+			ultima_operacion = ' ';
+			ope1 = 0;
+			ope2 = 0;
+			operacion= false;
+			
+		}
 	}
 }
