@@ -13,8 +13,6 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JPanel;
-
 public class Ventana extends JFrame implements ICrear_Interface, ActionListener {
 
 	// *************** IDIOMATIZACION DE LA CLASE ********************
@@ -61,7 +59,6 @@ public class Ventana extends JFrame implements ICrear_Interface, ActionListener 
 	private JMenuItem ayuda_manual;
 	private JMenuItem ayuda_acercade;
 	private JMenuItem ayuda_calculadora;
-	private JPanel panel;
 
 	// ***** PANELES DE PANTALLA ******
 
@@ -239,8 +236,6 @@ public class Ventana extends JFrame implements ICrear_Interface, ActionListener 
 		ayuda_acercade.setName("ayuda_acercade");
 		ayuda_manual.setName("ayuda_manual");
 		ayuda_calculadora.setName("ayuda_calculadora");
-		getContentPane().setLayout(null);
-		
 		// FIN CARGA PROPIEDAD NAME
 
 	}
@@ -276,7 +271,7 @@ public class Ventana extends JFrame implements ICrear_Interface, ActionListener 
 			// PENDIENTE DE DESARROLLO
 		}
 		if (opcion_elegida.equals("clientes_gestion")) {
-			Clientes_Vista clientes=new Clientes_Vista(this);
+			Clientes_Vista clientes = new Clientes_Vista(this);
 		}
 		if (opcion_elegida.equals("clientes_pedido")) {
 			// PENDIENTE DE DESARROLLO
@@ -342,4 +337,12 @@ public class Ventana extends JFrame implements ICrear_Interface, ActionListener 
 			// PENDIENTE DE DESARROLLO
 		}
 	}
+
+	// **************** FIN AREA DE EVENTOS **************************
+
+	// ********** ACCESORES PARA LAS PROPIEDADES DE CLASE ************
+
+	// ************ ACCESORES PARA REFLEXION *************************
+
+	// ************ ACCESORES PARA SPRING ****************************
 }
