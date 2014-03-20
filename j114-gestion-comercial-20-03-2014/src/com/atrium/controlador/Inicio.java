@@ -3,7 +3,7 @@ package com.atrium.controlador;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-public class Inico {
+public class Inicio {
 
 	public static void main(String[] args) {
 		// cargar el nuevo look and feel si se puede
