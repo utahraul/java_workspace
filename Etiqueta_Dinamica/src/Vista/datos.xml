@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE etiqueta_dinamica SYSTEM "./datos.dtd">
+<etiqueta_dinamica version="1.0">
+<nombre>Raul</nombre>
+<apellido>Hernandez</apellido>
+<direccion>Alcorcon</direccion>
+<pais>España</pais>
+</etiqueta_dinamica>
