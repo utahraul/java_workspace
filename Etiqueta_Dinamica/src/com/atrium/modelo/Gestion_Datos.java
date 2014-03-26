@@ -8,12 +8,15 @@ public class Gestion_Datos implements IGestionDatos {
 		datos_dao= new Datos_DAO();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.atrium.modelo.IGestionDatos#leer_Datos()
-	 */
 	@Override
 	public Datos_DTO leer_Datos(){
 		return datos_dao.leer_Datos();
+	}
+
+	@Override
+	public boolean escribir_Datos(Datos_DTO datos) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }

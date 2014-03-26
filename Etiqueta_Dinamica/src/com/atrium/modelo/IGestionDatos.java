@@ -2,6 +2,8 @@ package com.atrium.modelo;
 
 public interface IGestionDatos {
 
-	public abstract Datos_DTO leer_Datos();
+	public Datos_DTO leer_Datos();
+
+	public abstract boolean escribir_Datos(Datos_DTO datos);
 
 }

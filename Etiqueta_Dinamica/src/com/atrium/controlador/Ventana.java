@@ -14,14 +14,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import javax.swing.SwingConstants;
-
-import Vista.Formulario;
-
 import javax.swing.JTextField;
 
 import java.awt.Color;
 import java.awt.Component;
+
 import javax.swing.JPanel;
+
+import com.atrium.vista.Formulario;
 
 public class Ventana extends JFrame {
 	

@@ -2,6 +2,15 @@ package com.atrium.modelo;
 
 import java.io.IOException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -12,8 +21,8 @@ public class Datos_DAO extends DefaultHandler {
 
 	private String etiqueta_leida;
 	private Datos_DTO datos;
-	
-	public Datos_DAO (){
+
+	public Datos_DAO() {
 		datos = new Datos_DTO();
 	}
 
@@ -33,15 +42,47 @@ public class Datos_DAO extends DefaultHandler {
 
 		return datos;
 	}
-	
-	public boolean escribir_Datos(Datos_DTO datos_nuevos){
-		boolean valido= true;
-		//leer
-		//modificar los nodos con la información nueva
-		//escribir las modificaciones
-		
+
+	public boolean escribir_Datos(Datos_DTO datos_nuevos) {
+		boolean valido = true;
+		try {
+			// LEEMOS EL XML Y SE CREA LA ESTRUCTURA DOM
+			DocumentBuilderFactory fact_dom = DocumentBuilderFactory
+					.newInstance();
+			DocumentBuilder lector = fact_dom.newDocumentBuilder();
+			// OBTENEMOS EL OBJETO QUE TIENE SU CONTENIDO PARA MODIFICARLO
+			Document documento_DOM = lector.parse(this.getClass()
+					.getResource("/com/atrium/vista/datos.xml").getFile());
+			// COGEMOS LA ETIQUETA QUE CONTIENE EL ATRIBUTO A CAMBIAR
+			Node elemento_xml = documento_DOM.getElementsByTagName("nombre")
+					.item(0);
+			elemento_xml.setTextContent(datos_nuevos.getNombre());
+
+			elemento_xml = documento_DOM.getElementsByTagName("apellido").item(
+					0);
+			elemento_xml.setTextContent(datos_nuevos.getApellido());
+
+			elemento_xml = documento_DOM.getElementsByTagName("calle").item(0);
+			elemento_xml.setTextContent(datos_nuevos.getDireccion());
+
+			elemento_xml = documento_DOM.getElementsByTagName("ciudad").item(0);
+			elemento_xml.setTextContent(datos_nuevos.getPais());
+
+			// ESCRIBIMOS EL DOCUMENTO MODIFICADO
+			TransformerFactory fact = TransformerFactory.newInstance();
+			Transformer flujo_escritura = fact.newTransformer();
+			// QUE CONTENIDO VAMOS A ESCRIBIR
+			DOMSource entrada_datos = new DOMSource(documento_DOM);
+			// DONDE LO VAMOS A ESCRIBIR
+			StreamResult apuntador = new StreamResult(this.getClass()
+					.getResource("/com/atrium/vista/datos.xml").getFile());
+			// ESCRIBIMOS
+			flujo_escritura.transform(entrada_datos, apuntador);
+
+		} catch (Exception e) {
+
+		}
 		return valido;
-		
 	}
 
 	@Override
@@ -54,18 +95,20 @@ public class Datos_DAO extends DefaultHandler {
 	public void characters(char[] texto, int inicio, int tamaño)
 			throws SAXException {
 		String texto_eti = new String(texto, inicio, tamaño);
-		if (etiqueta_leida.equals("nombre")){
+		if (texto_eti.indexOf("\n") == -1) {
+
+		}
+		if (etiqueta_leida.equals("nombre")) {
 			datos.setNombre(texto_eti);
 		}
-		if (etiqueta_leida.equals("apellido")){
+		if (etiqueta_leida.equals("apellido")) {
 			datos.setApellido(texto_eti);
 		}
-		if (etiqueta_leida.equals("direccion")){
+		if (etiqueta_leida.equals("calle")) {
 			datos.setDireccion(texto_eti);
 		}
-		if (etiqueta_leida.equals("pais")){
+		if (etiqueta_leida.equals("ciudad")) {
 			datos.setPais(texto_eti);
 		}
 	}
-
 }

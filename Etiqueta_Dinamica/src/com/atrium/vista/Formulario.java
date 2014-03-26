@@ -1,6 +1,5 @@
-package Vista;
+package com.atrium.vista;
 
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +8,10 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import com.atrium.modelo.Datos_DTO;
+import com.atrium.modelo.Gestion_Datos;
+import com.atrium.modelo.IGestionDatos;
 
 public class Formulario extends JPanel implements ActionListener {
 
@@ -98,14 +101,35 @@ public class Formulario extends JPanel implements ActionListener {
 
 	}
 
+	public void leer_Datos() {
+		IGestionDatos gestion_daDatos = new Gestion_Datos();
+		Datos_DTO datos = gestion_daDatos.leer_Datos();
+		textField_4.setText(datos.getNombre());
+		textField_5.setText(datos.getApellido());
+		textField_6.setText(datos.getDireccion());
+		textField_7.setText(datos.getPais());
+	}
+
+	public void escribir_Datos() {
+		Datos_DTO datos_nuevos = new Datos_DTO();
+		datos_nuevos.setNombre(textField_4.getText());
+		datos_nuevos.setApellido(textField_5.getText());
+		datos_nuevos.setDireccion(textField_6.getText());
+		datos_nuevos.setPais(textField_7.getText());
+		IGestionDatos gestion_datos = new Gestion_Datos();
+		gestion_datos.escribir_Datos(datos_nuevos);
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent evento) {
 		String boton_seleccionado = ((JButton) evento.getSource()).getName();
 		if (boton_seleccionado.equals("cargar")) {
-			System.out.print("Cargar");
+			//System.out.print("Cargar");
+			leer_Datos();
 		}
 		if (boton_seleccionado.equals("guardar")) {
-			System.out.print("Guardar");
+			//System.out.print("Guardar");
+			escribir_Datos();
 		}
 		if (boton_seleccionado.equals("salir")) {
 			System.exit(0);
