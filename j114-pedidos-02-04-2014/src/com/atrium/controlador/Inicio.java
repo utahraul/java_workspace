@@ -11,18 +11,12 @@ public class Inicio {
 		Pedidos_DAO pedido_dao = new Pedidos_DAO();
 
 		Pedido pedido_nuevo = new Pedido();
-		pedido_nuevo.setNumero_pedido(new Integer(999));
+		pedido_nuevo.setNumero_pedido(new Integer(998));
 		pedido_nuevo.setFecha_pedido(new Date());
 		pedido_nuevo.setTotal_factura_pedido(new Double(10151));
 		pedido_nuevo.setCodigo_cliente(new Integer(21));
 
 		pedido_dao.alta_Pedido(pedido_nuevo);
-
-		pedido_nuevo.setCodigo_cliente(new Integer(25));
-
-		pedido_dao.modificar_Pedido(pedido_nuevo);
-
-		pedido_dao.baja_Pedido(pedido_nuevo);
 
 	}
 
